@@ -1,0 +1,5 @@
+#!/bin/sh
+# Runs the same checks as CI before every commit.
+if command -v python3 >/dev/null 2>&1; then PYTHON=python3; else PYTHON=python; fi
+"$PYTHON" -m compileall -q src tests || { echo "Commit stopped: a file does not compile."; exit 1; }
+"$PYTHON" -m unittest discover -s tests -t . || { echo "Commit stopped: a test failed."; exit 1; }
