@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Royale: Browser Battle</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>SNAKE ROYALE</h1>
+      <p class="subtitle">Classic Snake with 2 Competing NPCs</p>
+    </header>
+
+    <div class="scoreboard">
+      <div class="score-card player" id="card-player">
+        <div class="card-header">
+          <span class="badge player-badge">YOU</span>
+          <span class="status-indicator" id="status-player">ALIVE</span>
+        </div>
+        <div class="card-stats">
+          <div><span class="stat-label">Length:</span> <span class="stat-val" id="len-player">4</span></div>
+          <div><span class="stat-label">Apples:</span> <span class="stat-val" id="score-player">0</span></div>
+        </div>
+      </div>
+
+      <div class="score-card npc1" id="card-npc1">
+        <div class="card-header">
+          <span class="badge npc1-badge">NPC 1</span>
+          <span class="status-indicator" id="status-npc1">ALIVE</span>
+        </div>
+        <div class="card-stats">
+          <div><span class="stat-label">Length:</span> <span class="stat-val" id="len-npc1">4</span></div>
+          <div><span class="stat-label">Apples:</span> <span class="stat-val" id="score-npc1">0</span></div>
+        </div>
+      </div>
+
+      <div class="score-card npc2" id="card-npc2">
+        <div class="card-header">
+          <span class="badge npc2-badge">NPC 2</span>
+          <span class="status-indicator" id="status-npc2">ALIVE</span>
+        </div>
+        <div class="card-stats">
+          <div><span class="stat-label">Length:</span> <span class="stat-val" id="len-npc2">4</span></div>
+          <div><span class="stat-label">Apples:</span> <span class="stat-val" id="score-npc2">0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <main class="game-area">
+      <div class="canvas-wrapper">
+        <canvas id="game-canvas" width="600" height="600"></canvas>
+        <div class="game-over-overlay hidden" id="game-over-overlay">
+          <div class="overlay-modal">
+            <h2>GAME OVER</h2>
+            <p id="game-over-reason">Your head became a green apple!</p>
+            <p class="sub-notice">NPCs are still battling in the background...</p>
+            <button id="btn-restart" class="restart-button">RESTART GAME</button>
+            <span class="hint-text">Or press <kbd>Space</kbd> / <kbd>Enter</kbd></span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="game-rules">
+        <h3>Game Rules</h3>
+        <div class="rule-item">
+          <span class="apple-preview red-apple"></span>
+          <div>
+            <strong>Red Apple (75% spawn)</strong>
+            <p>+1 length. <strong>50% chance</strong> a random rival loses 1 body segment.</p>
+          </div>
+        </div>
+        <div class="rule-item">
+          <span class="apple-preview green-apple"></span>
+          <div>
+            <strong>Green Apple (25% spawn)</strong>
+            <p>+1 length. <strong>100% chance</strong> a random rival loses 1 body segment!</p>
+          </div>
+        </div>
+        <div class="rule-item rule-danger">
+          <span class="danger-icon">☠️</span>
+          <div>
+            <strong>Down to Head = Elimination</strong>
+            <p>Lose enough segments down to head and you're eliminated! Your head becomes a Green Apple.</p>
+          </div>
+        </div>
+        <div class="controls-guide">
+          <h4>Controls</h4>
+          <p><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or Arrow Keys to Move</p>
+          <p><kbd>Space</kbd> or <kbd>R</kbd> to Restart</p>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
