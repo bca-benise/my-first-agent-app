@@ -4,6 +4,8 @@
 
   const overlay = document.getElementById("game-over-overlay");
   const btnRestart = document.getElementById("btn-restart");
+  const victoryBanner = document.getElementById("victory-banner");
+  const btnWinRestart = document.getElementById("btn-win-restart");
 
   const elements = {
     player: {
@@ -46,6 +48,7 @@
 
   let latestState = null;
   let isGameOverVisible = false;
+  let isVictoryVisible = false;
 
   function sendDirection(dir) {
     fetch("/api/direction", {
@@ -61,7 +64,9 @@
     })
       .then(() => {
         overlay.classList.add("hidden");
+        victoryBanner.classList.add("hidden");
         isGameOverVisible = false;
+        isVictoryVisible = false;
       })
       .catch(() => {});
   }
@@ -81,7 +86,7 @@
       sendDirection("RIGHT");
       e.preventDefault();
     } else if (key === " " || key === "r" || key === "enter") {
-      if (isGameOverVisible) {
+      if (isGameOverVisible || isVictoryVisible) {
         sendRestart();
         e.preventDefault();
       }
@@ -89,6 +94,10 @@
   });
 
   btnRestart.addEventListener("click", () => {
+    sendRestart();
+  });
+
+  btnWinRestart.addEventListener("click", () => {
     sendRestart();
   });
 
@@ -233,6 +242,19 @@
 
     // Update scoreboard
     updateScoreboard(state.snakes);
+
+    // Update victory banner
+    if (state.is_player_winner && !state.is_game_over) {
+      if (!isVictoryVisible) {
+        victoryBanner.classList.remove("hidden");
+        isVictoryVisible = true;
+      }
+    } else {
+      if (isVictoryVisible) {
+        victoryBanner.classList.add("hidden");
+        isVictoryVisible = false;
+      }
+    }
 
     // Update game over overlay
     if (state.is_game_over) {

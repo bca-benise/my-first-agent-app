@@ -37,6 +37,7 @@ class GameSession:
         self.snakes: list[SnakeState] = []
         self.apples: list[Apple] = []
         self.is_game_over: bool = False
+        self.is_player_winner: bool = False
         self.tick_count: int = 0
         self.pending_player_direction: Direction | None = None
         self.reset()
@@ -44,6 +45,7 @@ class GameSession:
     def reset(self) -> None:
         self.tick_count = 0
         self.is_game_over = False
+        self.is_player_winner = False
         self.pending_player_direction = None
         self.snakes = self.build_initial_snakes()
         self.apples = []
@@ -271,6 +273,16 @@ class GameSession:
         if self.tick_count % self.apple_spawn_interval == 0 or len(self.apples) < 2:
             self.spawn_periodic_apple()
 
+        # 6. Check player victory (all NPC snakes eliminated while player survives)
+        player = self.find_snake("player")
+        all_npcs_eliminated = all(
+            not snake.is_alive()
+            for snake in self.snakes
+            if snake.role == SnakeRole.NPC
+        )
+        if player.is_alive() and all_npcs_eliminated:
+            self.is_player_winner = True
+
     def snapshot(self) -> GameSnapshot:
         return GameSnapshot(
             dimensions=self.dimensions,
@@ -287,5 +299,6 @@ class GameSession:
             ],
             apples=list(self.apples),
             is_game_over=self.is_game_over,
+            is_player_winner=self.is_player_winner,
             tick_count=self.tick_count,
         )

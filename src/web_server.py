@@ -41,6 +41,7 @@ def serialize_snapshot(snapshot: GameSnapshot) -> dict[str, Any]:
             for apple in snapshot.apples
         ],
         "is_game_over": snapshot.is_game_over,
+        "is_player_winner": snapshot.is_player_winner,
         "tick_count": snapshot.tick_count,
     }
 

@@ -84,7 +84,9 @@ class GameSnapshot:
     snakes: list[SnakeState]
     apples: list[Apple]
     is_game_over: bool
+    is_player_winner: bool
     tick_count: int
+
 
 
 class InvalidDirectionError(Exception):

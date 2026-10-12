@@ -51,6 +51,14 @@
     <main class="game-area">
       <div class="canvas-wrapper">
         <canvas id="game-canvas" width="600" height="600"></canvas>
+        <div class="victory-banner hidden" id="victory-banner">
+          <div class="victory-content">
+            <div class="victory-title">👑 YOU WIN!</div>
+            <div class="victory-sub">All rivals eliminated! Keep playing or restart:</div>
+            <button id="btn-win-restart" class="restart-button win-restart-button">RESTART GAME</button>
+            <span class="hint-text">Or press <kbd>Space</kbd> / <kbd>Enter</kbd></span>
+          </div>
+        </div>
         <div class="game-over-overlay hidden" id="game-over-overlay">
           <div class="overlay-modal">
             <h2>GAME OVER</h2>
