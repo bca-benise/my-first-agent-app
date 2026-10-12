@@ -126,6 +126,11 @@ class GameSession:
         self.apples = [apple for apple in self.apples if apple.position != position]
         self.apples.append(self.apple_spawner.spawn_head_green_apple(position))
 
+    def add_red_apple_at(self, position: Point) -> None:
+        # Avoid duplicating an apple if one already exists at this position
+        if not any(apple.position == position for apple in self.apples):
+            self.apples.append(self.apple_spawner.spawn_body_red_apple(position))
+
     def trigger_apple_penalty(self, eating_snake: SnakeState, apple: Apple) -> None:
         should_trigger = False
         if apple.kind == AppleType.GREEN:
@@ -166,6 +171,8 @@ class GameSession:
     def eliminate_snake_by_crash(self, snake: SnakeState, head_position: Point) -> None:
         snake.status = SnakeStatus.ELIMINATED
         self.add_green_apple_at(head_position)
+        for segment in snake.body[1:]:
+            self.add_red_apple_at(segment)
         if snake.role == SnakeRole.PLAYER:
             self.is_game_over = True
 
@@ -252,6 +259,8 @@ class GameSession:
             if eaten_apple is not None:
                 self.apples = [a for a in self.apples if a.position != eaten_apple.position]
                 snake.body.insert(0, new_head)
+                if eaten_apple.kind == AppleType.GREEN:
+                    snake.body.extend([snake.body[-1]] * 2)
                 snake.score += 1
                 self.trigger_apple_penalty(snake, eaten_apple)
             else:

@@ -31,6 +31,9 @@ class TestCollisions(unittest.TestCase):
         self.assertIsNotNone(apple)
         self.assertEqual(apple.kind, AppleType.GREEN)
 
+        red_positions = {a.position for a in session.apples if a.kind == AppleType.RED}
+        self.assertEqual(red_positions, {Point(0, 1), Point(0, 2)})
+
     def test_snake_crashes_into_another_snakes_body_leaves_green_apple(self) -> None:
         session = GameSession(dimensions=self.dimensions)
         player_head = Point(3, 4)
@@ -59,6 +62,9 @@ class TestCollisions(unittest.TestCase):
         apple = next((a for a in session.apples if a.position == player_head), None)
         self.assertIsNotNone(apple)
         self.assertEqual(apple.kind, AppleType.GREEN)
+
+        red_positions = {a.position for a in session.apples if a.kind == AppleType.RED}
+        self.assertEqual(red_positions, {Point(2, 4), Point(1, 4)})
 
     def test_snake_crashes_into_own_body_leaves_green_apple(self) -> None:
         session = GameSession(dimensions=self.dimensions)
@@ -89,6 +95,12 @@ class TestCollisions(unittest.TestCase):
         apple = next((a for a in session.apples if a.position == head_pos), None)
         self.assertIsNotNone(apple)
         self.assertEqual(apple.kind, AppleType.GREEN)
+
+        red_positions = {a.position for a in session.apples if a.kind == AppleType.RED}
+        self.assertEqual(
+            red_positions,
+            {Point(3, 2), Point(3, 3), Point(2, 3), Point(1, 3)},
+        )
 
 
 if __name__ == "__main__":

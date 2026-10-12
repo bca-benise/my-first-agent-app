@@ -48,3 +48,6 @@ class AppleSpawner:
 
     def spawn_head_green_apple(self, head_position: Point) -> Apple:
         return Apple(position=head_position, kind=AppleType.GREEN)
+
+    def spawn_body_red_apple(self, body_position: Point) -> Apple:
+        return Apple(position=body_position, kind=AppleType.RED)

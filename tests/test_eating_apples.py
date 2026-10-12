@@ -93,8 +93,8 @@ class TestEatingApples(unittest.TestCase):
         player = session.find_snake("player")
         npc = session.find_snake("npc_1")
 
-        # Player grew, NPC definitely shrank
-        self.assertEqual(player.length, 4)
+        # Player grew by 3, NPC definitely shrank
+        self.assertEqual(player.length, 6)
         self.assertEqual(npc.length, 3)
 
     def test_snake_eating_apple_with_no_other_living_snakes(self) -> None:
@@ -112,7 +112,7 @@ class TestEatingApples(unittest.TestCase):
         session.tick()
 
         player = session.find_snake("player")
-        self.assertEqual(player.length, 4)
+        self.assertEqual(player.length, 6)
 
 
 if __name__ == "__main__":

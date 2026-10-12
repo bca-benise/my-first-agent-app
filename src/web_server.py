@@ -46,7 +46,7 @@ def serialize_snapshot(snapshot: GameSnapshot) -> dict[str, Any]:
 
 
 class GameServerState:
-    def __init__(self, session: GameSession, tick_interval_seconds: float = 0.12) -> None:
+    def __init__(self, session: GameSession, tick_interval_seconds: float = 0.138) -> None:
         self.session = session
         self.tick_interval_seconds = tick_interval_seconds
         self.lock = threading.Lock()
